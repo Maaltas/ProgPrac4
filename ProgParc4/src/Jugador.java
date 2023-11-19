@@ -1,4 +1,11 @@
 public class Jugador {
+    private enum Posicio{
+        Base,
+        Escolta,
+        Aler,
+        AlaPivot,
+        Pivot
+    }
     NodeA arrel;
     Posicio posicio;
     int puntuacio;
