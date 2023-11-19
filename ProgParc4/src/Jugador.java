@@ -6,7 +6,6 @@ public class Jugador {
         AlaPivot,
         Pivot
     }
-    NodeA arrel;
     Posicio posicio;
     int puntuacio;
     public Jugador (int posicio, int puntuacio){
