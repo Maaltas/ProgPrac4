@@ -12,48 +12,67 @@ public class AcbEnll <E extends Comparable<E>> implements Acb<E>, Cloneable{
             this.dreta = node1;
         }
     }
+    Comparable<E> c;
     NodeA arrel;
     Queue <E> cua;
     Acb<E> arbre;
-    public AcbEnll(){
-
-    }
+    public AcbEnll(){}
     public E arrel() throws ArbreException {
         return null;
     }
 
-    @Override
-    public Acb<E> fillEsquerre() {
-        return null;
+    public Acb<E> fillEsquerre() throws ArbreException {
+        if (arrel != null){
+            Acb v = new AcbEnll();
+            ((AcbEnll)v).arrel = arrel.esq;
+            return v;
+        }
+        throw new ArbreException("L'arbre es buit");
     }
 
-    @Override
-    public Acb<E> fillDret() {
-        return null;
+    public Acb<E> fillDret() throws ArbreException {
+        if (arrel != null){
+            Acb v = new AcbEnll();
+            ((AcbEnll)v).arrel = arrel.dreta;
+            return v;
+        }
+        throw new ArbreException("L'arbre es buit");
     }
 
-    @Override
     public boolean abBuit() {
-        return false;
+        return arrel == null;
     }
 
-    @Override
     public void buidar() {
-
+        arrel = null;
     }
 
-    @Override
     public void inserir(E e) throws ArbreException {
 
     }
 
-    @Override
     public void esborrar(E e) throws ArbreException {
 
     }
 
-    @Override
-    public boolean membre(E e) {
+    public boolean membre(E e) {return cua.contains(e);}
+
+
+    public void iniRecurregut(boolean sentit) {
+
+    }
+
+    public boolean finalRecurregut() {
         return false;
     }
+
+    public E segRecurregut() throws ArbreException {
+        return null;
+    }
 }
+/*
+offer(E e): Agrega un elemento al final de la cola.
+poll(): Recupera y elimina el elemento al principio de la cola.
+peek(): Recupera el elemento al principio de la cola sin eliminarlo.
+isEmpty(): Verifica si la cola está vacía.
+ */
