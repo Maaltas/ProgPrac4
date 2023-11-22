@@ -6,26 +6,20 @@ public interface Acb<E extends Comparable<E>> {
 
     //Si no te fill esquerre retorna un arbre buit
     public Acb<E> fillDret() throws ArbreException;
+
     //Si no te fill dret retorna un arbre buit
-
     public boolean abBuit();
+
     //Ens diu si l'arbre es buit
-
     public void buidar();
+
     //Buida l'arbre
-
     public void inserir(E e) throws ArbreException;
+
     //Llensa una excepcio si l'element que s'insereix esta repetit
-
     public void esborrar(E e) throws ArbreException;
+
     //Llansa una excepcio si l'element no hi es
-
     public boolean membre(E e);
-    //True si l'element existeix a l'arbre
-
-    public void iniRecurregut(boolean sentit);
-
-    public boolean finalRecurregut();
-
-    public E segRecurregut() throws ArbreException;
+//True si l'element existeix a l'arbre
 }

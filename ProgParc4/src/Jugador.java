@@ -18,11 +18,11 @@ public class Jugador {
     }
 
     public int compareTo(Jugador jugador) {
-        int comparacio = this.posicio.compareTo(jugador.posicio);
-        if (comparacio == 0) {
+        int comparacionPosicion = Integer.compare(this.posicio.ordinal(), jugador.posicio.ordinal());
+        if (comparacionPosicion == 0) {
             return Integer.compare(this.puntuacio, jugador.puntuacio);
         }
-        return comparacio;
+        return comparacionPosicion;
     }
 
     public int getPosicio() {return posicio.ordinal();}

@@ -1,49 +1,59 @@
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class AcbEnll<E extends Comparable<E>> implements Acb<E>, Cloneable {
     private class NodeA {
-        Jugador contigut;
+        E contigut;
         NodeA esq, dreta;
 
-        NodeA() {this(null);}
+        NodeA(E jugador) {
+            this(jugador, null, null);
+        }
 
-        NodeA(Jugador jugador) {this(jugador, null, null);}
-
-        NodeA(Jugador jugador, NodeA node, NodeA node1) {
+        NodeA(E jugador, NodeA esq, NodeA dreta) {
             this.contigut = jugador;
-            this.esq = node;
-            this.dreta = node1;
+            this.esq = esq;
+            this.dreta = dreta;
         }
     }
 
-    Comparable<E> c;
-    NodeA arrel;
-    Queue<E> cua;
-    Acb<E> arbre;
 
-    public AcbEnll() {}
+    private NodeA arrel;
+    private Queue<E> cua;
+    private boolean inOrdreAscendent;
+
+    public AcbEnll() {
+        arrel = null;
+        cua = new LinkedList<>();
+        inOrdreAscendent = true;
+    }
+
 
     public E arrel() throws ArbreException {
-        return null;
+        if (arrel != null) {
+            return arrel.contigut;
+        }
+        throw new ArbreException("L'arbre es buit");
     }
 
     public Acb<E> fillEsquerre() throws ArbreException {
         if (arrel != null) {
-            Acb v = new AcbEnll();
-            ((AcbEnll) v).arrel = arrel.esq;
-            return v;
+            AcbEnll<E> subarbre = new AcbEnll<>();
+            subarbre.arrel = arrel.esq;
+            return subarbre;
         }
         throw new ArbreException("L'arbre es buit");
     }
 
     public Acb<E> fillDret() throws ArbreException {
         if (arrel != null) {
-            Acb v = new AcbEnll();
-            ((AcbEnll) v).arrel = arrel.dreta;
-            return v;
+            AcbEnll<E> subarbre = new AcbEnll<>();
+            subarbre.arrel = arrel.dreta;
+            return subarbre;
         }
         throw new ArbreException("L'arbre es buit");
     }
+
 
     public boolean abBuit() {
         return arrel == null;
@@ -55,152 +65,106 @@ public class AcbEnll<E extends Comparable<E>> implements Acb<E>, Cloneable {
 
     public void inserir(E e) throws ArbreException {
         if (arrel == null) {
-            arrel = new NodeA((Jugador) e);
+            arrel = new NodeA(e);
         } else {
-            NodeA node = arrel;
-            while (node != null) {
-                if (node.contigut.compareTo((Jugador) e) < 0) {
-                    if (node.esq == null) {
-                        node.esq = new NodeA((Jugador) e);
-                        return;
-                    }
-                    node = node.esq;
-                } else {
-                    if (node.dreta == null) {
-                        node.dreta = new NodeA((Jugador) e);
-                        return;
-                    }
-                    node = node.dreta;
-                }
+            inserirRecursiu(arrel, e);
+        }
+    }
+
+    private void inserirRecursiu(NodeA node, E e) {
+        if (node.contigut.compareTo(e) < 0) {
+            if (node.esq == null) {
+                node.esq = new NodeA(e);
+            } else {
+                inserirRecursiu(node.esq, e);
+            }
+        } else {
+            if (node.dreta == null) {
+                node.dreta = new NodeA(e);
+            } else {
+                inserirRecursiu(node.dreta, e);
             }
         }
     }
 
     public void esborrar(E e) throws ArbreException {
-        if (arrel == null) {
-            throw new ArbreException("L'arbre es buit");
+        arrel = esborrarRecursiu(arrel, e);
+    }
+
+    private NodeA esborrarRecursiu(NodeA node, E e) {
+        if (node == null) {
+            System.out.println("L'element no hi es");
+        }
+
+        assert node != null;
+        int comparacio = node.contigut.compareTo(e);
+        if (comparacio < 0) {
+            node.esq = esborrarRecursiu(node.esq, e);
+        } else if (comparacio > 0) {
+            node.dreta = esborrarRecursiu(node.dreta, e);
         } else {
-            NodeA node = arrel;
-            while (node != null) {
-                if (node.contigut.compareTo((Jugador) e) < 0) {
-                    if (node.esq == null) {
-                        throw new ArbreException("L'element no hi es");
-                    }
-                    node = node.esq;
-                } else {
-                    if (node.dreta == null) {
-                        throw new ArbreException("L'element no hi es");
-                    }
-                    node = node.dreta;
-                }
+            if (node.esq == null) {
+                return node.dreta;
+            } else if (node.dreta == null) {
+                return node.esq;
+            }
+
+            node.contigut = trobarMinim(node.dreta);
+            node.dreta = esborrarRecursiu(node.dreta, node.contigut);
+        }
+        return node;
+    }
+
+    private E trobarMinim(NodeA node) {
+        while (node.esq != null) {
+            node = node.esq;
+        }
+        return node.contigut;
+    }
+
+
+    public boolean membre(E e) {
+        return cua.contains(e);
+    }
+
+    public void iniRecorregut(boolean sentit) throws ArbreException {
+        cua.clear();
+        inOrdreAscendent = sentit;
+        if (arrel != null) {
+            inOrdre(arrel);
+        } else {
+            throw new ArbreException("L'arbre es buit, no es pot iniciar el recorregut.");
+        }
+    }
+
+
+    private void inOrdre(NodeA node) {
+        if (node != null) {
+            if (inOrdreAscendent) {
+                inOrdre(node.esq);
+                cua.offer(node.contigut);
+                inOrdre(node.dreta);
+            } else {
+                inOrdre(node.dreta);
+                cua.offer(node.contigut);
+                inOrdre(node.esq);
             }
         }
     }
 
-    public boolean membre(E e) {return cua.contains(e);}
 
+    public boolean finalRecorregut() {
+        return cua.isEmpty();
+    }
 
-    public void iniRecurregut(boolean sentit) {
-        // TOT AIXÒ HO HA FET EL COPILOT, NO SÉ QUINA INTENCIÓ TENIA PERO SEGUR Q BONA
-        if (sentit) {
-            cua = new Queue<E>() {
-                @Override
-                public boolean add(E e) {
-                    return false;
-                }
-
-                @Override
-                public boolean offer(E e) {
-                    return false;
-                }
-
-                @Override
-                public E remove() {
-                    return null;
-                }
-
-                @Override
-                public E poll() {
-                    return null;
-                }
-
-                @Override
-                public E element() {
-                    return null;
-                }
-
-                @Override
-                public E peek() {
-                    return null;
-                }
-
-                @Override
-                public int size() {
-                    return 0;
-                }
-
-                @Override
-                public boolean isEmpty() {
-                    return false;
-                }
-
-                @Override
-                public boolean contains(Object o) {
-                    return false;
-                }
-
-                @Override
-                public Iterator<E> iterator() {
-                    return null;
-                }
-
-                @Override
-                public Object[] toArray() {
-                    return new Object[0];
-                }
-
-                @Override
-                public <T> T[] toArray(T[] a) {
-                    return null;
-                }
-
-                @Override
-                public boolean remove(Object o) {
-                    return false;
-                }
-
-                @Override
-                public boolean containsAll(Collection<?> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean addAll(Collection<? extends E> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean removeAll(Collection<?> c) {
-                    return false;
-                }
-
-                @Override
-                public boolean retainAll
-                        (Collection<?> c) {
-                    return false;
-                }
-            }
+    public E segRecorregut() throws ArbreException {
+        if (cua.isEmpty()) {
+            throw new ArbreException("No s'ha inicialitzat el recorregut o ja s'ha arribat al final.");
         }
-    }
-
-    public boolean finalRecurregut() {
-        return false;
-    }
-
-    public E segRecurregut() throws ArbreException {
-        return null;
+        return cua.poll();
     }
 }
+
 /*
 offer(E e): Agrega un elemento al final de la cola.
 poll(): Recupera y elimina el elemento al principio de la cola.
