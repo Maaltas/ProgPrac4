@@ -42,6 +42,7 @@ public class Main {
                 case 4:
                     // arbre.clonar() ???
                 case 5:
+                    System.out.println("Adeu!");
                     break;
             }
         } while (opcio < 1 || opcio > 5);

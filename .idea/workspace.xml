@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ad95fb3-126a-4949-a4a6-172bbbdc0d59" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Keyboard.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ProgParc4/Keyboard.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ProgPrac4.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ProgPrac4.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProgParc4/src/Acb.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProgParc4/src/Acb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProgParc4/src/AcbEnll.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProgParc4/src/AcbEnll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProgParc4/src/ArbreException.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProgParc4/src/ArbreException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProgParc4/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ProgParc4/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +74,7 @@
       <workItem from="1700632772918" duration="98000" />
       <workItem from="1700632888756" duration="279000" />
       <workItem from="1700636790348" duration="124000" />
-      <workItem from="1700636924686" duration="2327000" />
+      <workItem from="1700636924686" duration="2696000" />
     </task>
     <servers />
   </component>
