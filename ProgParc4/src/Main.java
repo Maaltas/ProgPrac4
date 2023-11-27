@@ -65,7 +65,6 @@ public class Main {
                     break;
                 case 4:
                     clone = (AcbEnll<E>) (arbre).clone();
-                    clone.iniRecorregut(true);
                     break;
                 case 5:
                     System.out.println("Adeu!");
