@@ -1,4 +1,4 @@
-public class Jugador {
+public class Jugador implements Comparable<Jugador>{
     public enum Posicio {  // A l'enunciat indica que és públic crec
         Base,
         Escolta,
@@ -12,7 +12,7 @@ public class Jugador {
 
     public Jugador(int posicio, int puntuacio) {
         if (posicio >= 0 && posicio <= 4) {
-            this.posicio = Posicio.values()[posicio];
+            this.posicio = Posicio.values()[posicio-1];
         }
         this.puntuacio = puntuacio;
     }
@@ -24,11 +24,6 @@ public class Jugador {
         }
         return comparacionPosicion;
     }
-
-    public int getPosicio() {return posicio.ordinal();}
-
-    public int getPuntuacio() {return puntuacio;}
-
     public String toString() {return posicio.toString() + " " + puntuacio;}
 
 }
